@@ -12,11 +12,21 @@ const countdownDiv = document.getElementById("countdown");
 const btnYear = document.getElementById("btn-year");
 const btnHsc = document.getElementById("btn-hsc");
 
+let isAnimating = false;
+let animationStartTime = 0;
+const ANIMATION_DURATION = 2000; // 2 seconds
+
 function switchMode(mode) {
   currentMode = mode;
+
+  // Start animation when switching to year mode
+  if (mode === "year") {
+    isAnimating = true;
+    animationStartTime = performance.now();
+  }
+
   updateUI();
 
-  // Toggle active state of chips
   // Toggle active state of chips
   if (mode === "year") {
     btnYear.classList.add("active");
@@ -93,6 +103,10 @@ function getTimeRemaining(targetDate) {
   return { months, days, hours, minutes, seconds, passed: false };
 }
 
+function easeOutCubic(x) {
+  return 1 - Math.pow(1 - x, 3);
+}
+
 function updateUI() {
   const now = new Date();
 
@@ -109,15 +123,35 @@ function updateUI() {
   dateDisplay.textContent = now.toLocaleDateString("en-US", options);
 
   if (currentMode === "year") {
-    const progress = getYearProgress();
+    const realProgress = getYearProgress();
+    let displayProgress = realProgress;
+
+    if (isAnimating) {
+      const nowTime = performance.now();
+      const elapsedAnimation = nowTime - animationStartTime;
+      const progressFactor = Math.min(elapsedAnimation / ANIMATION_DURATION, 1);
+
+      // Apply easing function for smooth start/end
+      const easedFactor = easeOutCubic(progressFactor);
+
+      displayProgress = realProgress * easedFactor;
+
+      if (progressFactor >= 1) {
+        isAnimating = false;
+      }
+    }
+
     const shortYear = 2026;
 
     // Update Label
-    labelText.textContent = `${progress.toFixed(6)}% of ${shortYear} has passed`;
+    labelText.textContent = `${displayProgress.toFixed(isAnimating ? 6 : 6)}% of ${shortYear} has passed`;
 
     // Update Bar
-    progressBar.style.width = `${progress}%`;
+    progressBar.style.width = `${displayProgress}%`;
   } else {
+    // Stop animation if we switch away
+    isAnimating = false;
+
     const remaining = getTimeRemaining(HSC_DATE);
 
     if (remaining.passed) {
@@ -125,9 +159,13 @@ function updateUI() {
       countdownDiv.textContent = "Good Luck!";
     } else {
       labelText.textContent = "Time until HSC '26";
-      // format: "4 months, 0 days, 10 hours, 30 min, 20sec"
-      countdownDiv.textContent = `${remaining.months} months, ${remaining.days} days, ${remaining.hours} hours, ${remaining.minutes} min, ${remaining.seconds}sec`;
+      // format: "4 months, 0 days, 10 hours, 30 minutes, 20 seconds"
+      countdownDiv.textContent = `${remaining.months} months, ${remaining.days} days, ${remaining.hours} hours, ${remaining.minutes} minutes, ${remaining.seconds} seconds`;
     }
+  }
+
+  if (isAnimating) {
+    requestAnimationFrame(updateUI);
   }
 }
 
@@ -135,7 +173,12 @@ function updateUI() {
 switchMode("year");
 
 // Update loop (every second is enough for this precision, but 60fps frame for bar smoothness)
-setInterval(updateUI, 100);
+// We keep this for the steady state updates.
+// Note: When isAnimating is true, we are also calling requestAnimationFrame.
+// This is fine, updateUI is idempotent enough.
+setInterval(() => {
+  if (!isAnimating) updateUI();
+}, 100);
 
 // Expose to window for HTML onclick handling
 window.switchMode = switchMode;

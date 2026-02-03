@@ -2,49 +2,54 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>2026 Progress</title>
-    <link rel="stylesheet" href="style.css" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
-    <link rel="icon" type="image/png" href="assets/icon.png" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Year Progress</title>
+  <meta name="description" content="Track the progress of 2026." />
+  <meta name="keywords"
+    content="2026 Progress, Year Progress, HSC 2026, HSC Countdown, HSC '26, Time Tracker, Motivation, Year Percentage, Live Countdown, Fahim Foysal" />
+  <meta name="author" content="Fahim Foysal" />
+
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link rel="icon" type="image/png" href="assets/icon.png" />
 </head>
 
 <body>
-    <!-- Custom Cursor Element -->
-    <div class="custom-cursor" id="custom-cursor"></div>
+  <!-- Custom Cursor Element -->
+  <div class="custom-cursor" id="custom-cursor"></div>
 
-    <div class="container">
-        <!-- Chip Navigation -->
-        <div class="chips">
-            <button class="chip active" id="btn-year" onclick="switchMode('year')">
-                Year 2026
-            </button>
-            <button class="chip" id="btn-hsc" onclick="switchMode('hsc')">
-                HSC '26
-            </button>
-        </div>
-
-        <!-- Content Area -->
-        <div class="content">
-            <h1 id="label-text">Loading...</h1>
-            <p id="date-display"></p>
-
-            <!-- Progress Bar (Year mode) -->
-            <div class="progress-container" id="progress-container">
-                <div class="progress-bar" id="progress-bar"></div>
-            </div>
-
-            <!-- Countdown (HSC mode) -->
-            <div class="countdown" id="countdown" style="display: none">
-                <!-- Filled by JS -->
-            </div>
-        </div>
+  <div class="container">
+    <!-- Chip Navigation -->
+    <div class="chips">
+      <button class="chip active" id="btn-year" onclick="switchMode('year')">
+        Year 2026
+      </button>
+      <button class="chip" id="btn-hsc" onclick="switchMode('hsc')">
+        HSC '26
+      </button>
     </div>
 
-    <script src="script.js"></script>
+    <!-- Content Area -->
+    <div class="content">
+      <h1 id="label-text">Loading...</h1>
+      <p id="date-display"></p>
+
+      <!-- Progress Bar (Year mode) -->
+      <div class="progress-container" id="progress-container">
+        <div class="progress-bar" id="progress-bar"></div>
+      </div>
+
+      <!-- Countdown (HSC mode) -->
+      <div class="countdown" id="countdown" style="display: none">
+        <!-- Filled by JS -->
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
 </body>
 
 </html>
