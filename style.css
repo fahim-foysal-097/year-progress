@@ -21,6 +21,34 @@ body {
   align-items: center;
   height: 100vh;
   overflow: hidden;
+  cursor: none; /* Hide default cursor */
+}
+
+/* Custom Cursor */
+.custom-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 20px;
+  height: 20px;
+  background-color: var(--accent-green);
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  z-index: 10000;
+  mix-blend-mode: difference; /* Cool effect over text/bg */
+  transition:
+    transform 0.1s ease,
+    width 0.2s,
+    height 0.2s;
+  box-shadow: 0 0 10px var(--accent-green);
+}
+
+/* Hover effect state (triggered by JS) */
+.custom-cursor.hovered {
+  width: 50px;
+  height: 50px;
+  opacity: 0.5;
 }
 
 .container {
