@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2026 Progress</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <div class="container">
+        <!-- Chip Navigation -->
+        <div class="chips">
+            <button class="chip active" id="btn-year" onclick="switchMode('year')">Year 2026</button>
+            <button class="chip" id="btn-hsc" onclick="switchMode('hsc')">HSC '26</button>
+        </div>
+
+        <!-- Content Area -->
+        <div class="content">
+            <h1 id="label-text">Loading...</h1>
+
+            <!-- Progress Bar (Only used for Year mode) -->
+            <div class="progress-container" id="progress-container">
+                <div class="progress-bar" id="progress-bar"></div>
+            </div>
+
+            <!-- Countdown (Only used for HSC mode) -->
+            <div class="countdown" id="countdown" style="display: none;">
+                <!-- Filled by JS -->
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

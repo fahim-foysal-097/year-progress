@@ -1,0 +1,97 @@
+:root {
+  --bg-color: #121212;
+  --card-bg: #1e1e1e;
+  --text-primary: #ffffff;
+  --text-secondary: #aaaaaa;
+  --accent-green: #00ff66; /* Bright vibrant green per user image idea */
+  --chip-bg: #2c2c2c;
+  --chip-active: #ffffff;
+  --chip-text-inactive: #aaaaaa;
+  --chip-text-active: #000000;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Inter", sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-primary);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.container {
+  text-align: center;
+  width: 90%;
+  max-width: 600px;
+}
+
+/* Chips */
+.chips {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin-bottom: 60px;
+  /* flex-wrap: wrap; */
+}
+
+.chip {
+  background-color: var(--chip-bg);
+  color: var(--chip-text-inactive);
+  border: none;
+  padding: 10px 24px;
+  border-radius: 50px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.chip:hover {
+  background-color: #333;
+}
+
+.chip.active {
+  background-color: var(--chip-active);
+  color: var(--chip-text-active);
+  transform: scale(1.05);
+}
+
+/* Content */
+.content h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 30px;
+  color: var(--text-primary);
+}
+
+/* Progress Bar */
+.progress-container {
+  background-color: #333;
+  height: 40px;
+  width: 100%;
+  border-radius: 4px; /* Slight rounded corners but keeping it boxy like the image */
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+}
+
+.progress-bar {
+  background-color: var(--accent-green);
+  height: 100%;
+  width: 0%; /* JS will animate this */
+  transition: width 0.5s ease-out;
+  box-shadow: 0 0 10px var(--accent-green);
+}
+
+/* Countdown */
+.countdown {
+  font-size: clamp(1rem, 4vw, 2.5rem);
+  font-weight: 600;
+  color: var(--accent-green);
+  text-shadow: 0 0 10px rgba(0, 255, 102, 0.4);
+  width: 100%;
+}
