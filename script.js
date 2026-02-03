@@ -17,16 +17,25 @@ function switchMode(mode) {
   updateUI();
 
   // Toggle active state of chips
+  // Toggle active state of chips
   if (mode === "year") {
     btnYear.classList.add("active");
     btnHsc.classList.remove("active");
     progressContainer.style.display = "block";
     countdownDiv.style.display = "none";
+
+    // Year Mode: Show date, Left Align
+    document.getElementById("date-display").style.display = "block";
+    document.querySelector(".content").style.textAlign = "left";
   } else {
     btnHsc.classList.add("active");
     btnYear.classList.remove("active");
     progressContainer.style.display = "none";
     countdownDiv.style.display = "block";
+
+    // HSC Mode: Hide date, Center Align
+    document.getElementById("date-display").style.display = "none";
+    document.querySelector(".content").style.textAlign = "center";
   }
 }
 
@@ -50,7 +59,7 @@ function getTimeRemaining(targetDate) {
   }
 
   // Accurate calculation for Months/Days/Hours/Seconds
-  // We start from 'now' and increment months until we pass target, then backtrack one.
+  // start from 'now' and increment months until we pass target, then backtrack one.
   let tempDate = new Date(now);
   let months = 0;
 
@@ -87,12 +96,24 @@ function getTimeRemaining(targetDate) {
 function updateUI() {
   const now = new Date();
 
+  const dateDisplay = document.getElementById("date-display");
+
+  // Format Date: "January 22, 19:51"
+  const options = {
+    month: "long",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+  };
+  dateDisplay.textContent = now.toLocaleDateString("en-US", options);
+
   if (currentMode === "year") {
     const progress = getYearProgress();
     const shortYear = 2026;
 
     // Update Label
-    labelText.textContent = `${progress.toFixed(2)}% of ${shortYear} has passed`;
+    labelText.textContent = `${progress.toFixed(6)}% of ${shortYear} has passed`;
 
     // Update Bar
     progressBar.style.width = `${progress}%`;
