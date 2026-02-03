@@ -3,14 +3,106 @@ const HSC_DATE = new Date("2026-06-15T00:00:00");
 const YEAR_START = new Date("2026-01-01T00:00:00");
 const YEAR_END = new Date("2027-01-01T00:00:00");
 
-let currentMode = "year"; // 'year' or 'hsc'
+// Default Settings
+const defaultSettings = {
+  precision: 6,
+  color: "#00ff66",
+};
+let settings = { ...defaultSettings };
 
+// DOM Elements
 const labelText = document.getElementById("label-text");
 const progressContainer = document.getElementById("progress-container");
 const progressBar = document.getElementById("progress-bar");
 const countdownDiv = document.getElementById("countdown");
 const btnYear = document.getElementById("btn-year");
 const btnHsc = document.getElementById("btn-hsc");
+
+// Settings DOM
+const settingsBtn = document.getElementById("settings-btn");
+const settingsModal = document.getElementById("settings-modal");
+const closeModalBtn = document.getElementById("close-modal-btn");
+const precisionInput = document.getElementById("precision-input");
+const colorSwatches = document.querySelectorAll(".color-swatch");
+const customColorPicker = document.getElementById("custom-color-picker");
+
+// Load Settings
+function loadSettings() {
+  const saved = localStorage.getItem("yearProgressSettings");
+  if (saved) {
+    settings = { ...defaultSettings, ...JSON.parse(saved) };
+  }
+  applySettings(false); // false = don't save again
+  updateSettingsUI();
+}
+
+function saveSettings() {
+  localStorage.setItem("yearProgressSettings", JSON.stringify(settings));
+}
+
+function applySettings(save = true) {
+  // Apply Color
+  document.documentElement.style.setProperty("--accent-green", settings.color);
+
+  // Update inputs to match state
+  precisionInput.value = settings.precision;
+  customColorPicker.value = settings.color;
+
+  // Highlight active swatch
+  colorSwatches.forEach((swatch) => {
+    if (swatch.dataset.color.toLowerCase() === settings.color.toLowerCase()) {
+      swatch.classList.add("active");
+    } else {
+      swatch.classList.remove("active");
+    }
+  });
+
+  if (save) saveSettings();
+
+  // Trigger UI update to reflect precision change immediately
+  if (!isAnimating) updateUI();
+}
+
+function updateSettingsUI() {
+  precisionInput.value = settings.precision;
+}
+
+// Event Listeners
+settingsBtn.addEventListener("click", () => {
+  settingsModal.classList.remove("hidden");
+});
+
+closeModalBtn.addEventListener("click", () => {
+  settingsModal.classList.add("hidden");
+});
+
+settingsModal.addEventListener("click", (e) => {
+  if (e.target === settingsModal) {
+    settingsModal.classList.add("hidden");
+  }
+});
+
+precisionInput.addEventListener("input", (e) => {
+  let val = parseInt(e.target.value);
+  if (isNaN(val) || val < 0) val = 0;
+  if (val > 12) val = 12;
+  settings.precision = val;
+  applySettings();
+});
+
+colorSwatches.forEach((swatch) => {
+  swatch.addEventListener("click", () => {
+    settings.color = swatch.dataset.color;
+    applySettings();
+  });
+});
+
+customColorPicker.addEventListener("input", (e) => {
+  settings.color = e.target.value;
+  applySettings();
+});
+
+let currentMode = "year"; // 'year' or 'hsc'
 
 let isAnimating = false;
 let animationStartTime = 0;
@@ -144,7 +236,7 @@ function updateUI() {
     const shortYear = 2026;
 
     // Update Label
-    labelText.textContent = `${displayProgress.toFixed(isAnimating ? 6 : 6)}% of ${shortYear} has passed`;
+    labelText.textContent = `${displayProgress.toFixed(settings.precision)}% of ${shortYear} has passed`;
 
     // Update Bar
     progressBar.style.width = `${displayProgress}%`;
@@ -170,6 +262,7 @@ function updateUI() {
 }
 
 // Initial Render
+loadSettings();
 switchMode("year");
 
 // Update loop (every second is enough for this precision, but 60fps frame for bar smoothness)
