@@ -4,4 +4,4 @@ Just created this for no reason at all
 
 <a href="https://fahim-foysal-097.github.io/year-progress/">Visit the website</a>
 
-<img src="screenshot.png" width=720px>
+<img src="assets/screenshot.png">
