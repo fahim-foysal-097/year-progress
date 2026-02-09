@@ -2,7 +2,7 @@
   "name": "Year Progress",
   "short_name": "Year Progress",
   "description": "Track the progress of 2026 with a beautiful live countdown and percentage tracker.",
-  "start_url": "/",
+  "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#0a0a0f",
   "theme_color": "#00ff66",

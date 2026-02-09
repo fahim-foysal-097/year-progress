@@ -1,11 +1,11 @@
 const CACHE_NAME = "year-progress-v1";
 const ASSETS_TO_CACHE = [
-  "/",
-  "/index.html",
-  "/style.css",
-  "/script.js",
-  "/manifest.json",
-  "/assets/icon.png",
+  "./",
+  "./index.html",
+  "./style.css",
+  "./script.js",
+  "./manifest.json",
+  "./assets/icon.png",
 ];
 
 // Install event - cache assets
