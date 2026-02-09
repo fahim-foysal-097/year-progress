@@ -10,6 +10,19 @@
     content="2026 Progress, Year Progress, HSC 2026, HSC Countdown, HSC '26, Time Tracker, Motivation, Year Percentage, Live Countdown, Fahim Foysal" />
   <meta name="author" content="Fahim Foysal" />
 
+  <!-- PWA Meta Tags -->
+  <meta name="theme-color" content="#00ff66" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Year Progress" />
+
+  <!-- PWA Manifest -->
+  <link rel="manifest" href="manifest.json" />
+
+  <!-- iOS Icons -->
+  <link rel="apple-touch-icon" href="assets/icon.png" />
+
   <link rel="stylesheet" href="style.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -43,26 +56,26 @@
         <div class="setting-item">
           <label for="precision-input">Decimal Precision</label>
           <div class="input-wrapper">
-            <input type="number" id="precision-input" min="0" max="12" value="6">
+            <input type="number" id="precision-input" min="0" max="12" value="6" />
             <span class="input-hint">Default: 6</span>
           </div>
         </div>
         <div class="setting-item">
           <label for="color-picker">Theme Color</label>
           <div class="color-options">
-            <button class="color-swatch" data-color="#00ff66" style="background-color: #00ff66;"
+            <button class="color-swatch" data-color="#00ff66" style="background-color: #00ff66"
               aria-label="Green"></button>
-            <button class="color-swatch" data-color="#3b82f6" style="background-color: #3b82f6;"
+            <button class="color-swatch" data-color="#3b82f6" style="background-color: #3b82f6"
               aria-label="Blue"></button>
-            <button class="color-swatch" data-color="#ff0055" style="background-color: #ff0055;"
+            <button class="color-swatch" data-color="#ff0055" style="background-color: #ff0055"
               aria-label="Pink"></button>
-            <button class="color-swatch" data-color="#a855f7" style="background-color: #a855f7;"
+            <button class="color-swatch" data-color="#a855f7" style="background-color: #a855f7"
               aria-label="Purple"></button>
-            <button class="color-swatch" data-color="#f59e0b" style="background-color: #f59e0b;"
+            <button class="color-swatch" data-color="#f59e0b" style="background-color: #f59e0b"
               aria-label="Orange"></button>
 
             <div class="custom-color-wrapper" title="Custom Color">
-              <input type="color" id="custom-color-picker" value="#00ff66">
+              <input type="color" id="custom-color-picker" value="#00ff66" />
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
                 stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M2 22h20"></path>
@@ -107,6 +120,20 @@
   </div>
 
   <script src="script.js"></script>
+  <script>
+    // Register Service Worker for PWA
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js')
+          .then((registration) => {
+            console.log('SW registered:', registration.scope);
+          })
+          .catch((error) => {
+            console.log('SW registration failed:', error);
+          });
+      });
+    }
+  </script>
 </body>
 
 </html>
