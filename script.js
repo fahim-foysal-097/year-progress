@@ -1,5 +1,5 @@
 // Configuration
-const HSC_DATE = new Date("2026-06-05T00:00:00");
+const HSC_DATE = new Date("2026-07-01T00:00:00");
 const YEAR_START = new Date("2026-01-01T00:00:00");
 const YEAR_END = new Date("2027-01-01T00:00:00");
 
