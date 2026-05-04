@@ -128,15 +128,15 @@ function switchMode(mode) {
 
     // Year Mode: Show date, Left Align
     document.getElementById("date-display").style.display = "block";
+    labelText.style.display = "block"; // Show main label
     document.querySelector(".content").style.textAlign = "left";
   } else {
     btnHsc.classList.add("active");
     btnYear.classList.remove("active");
     progressContainer.style.display = "none";
     countdownDiv.style.display = "block";
-
-    // HSC Mode: Hide date, Center Align
     document.getElementById("date-display").style.display = "none";
+    labelText.style.display = "none"; // Hide main label, let the card header do the work
     document.querySelector(".content").style.textAlign = "center";
   }
 }
@@ -157,29 +157,10 @@ function getYearProgress() {
 function getTimeRemaining(targetDate) {
   const now = new Date();
   if (now >= targetDate) {
-    return { months: 0, days: 0, hours: 0, seconds: 0, passed: true };
+    return { days: 0, hours: 0, minutes: 0, seconds: 0, passed: true };
   }
 
-  // Accurate calculation for Months/Days/Hours/Seconds
-  // start from 'now' and increment months until we pass target, then backtrack one.
-  let tempDate = new Date(now);
-  let months = 0;
-
-  // Advance months safely
-  while (true) {
-    // Create a probe date advanced by 1 month
-    let nextMonthLine = new Date(tempDate);
-    nextMonthLine.setMonth(tempDate.getMonth() + 1);
-
-    // If advancing one month overshoots the target, stop.
-    if (nextMonthLine > targetDate) break;
-
-    tempDate = nextMonthLine;
-    months++;
-  }
-
-  // Now calculate remaining difference from tempDate to targetDate
-  let diff = targetDate - tempDate;
+  let diff = targetDate - now;
 
   const days = Math.floor(diff / (1000 * 60 * 60 * 24));
   diff -= days * (1000 * 60 * 60 * 24);
@@ -192,7 +173,7 @@ function getTimeRemaining(targetDate) {
 
   const seconds = Math.floor(diff / 1000);
 
-  return { months, days, hours, minutes, seconds, passed: false };
+  return { days, hours, minutes, seconds, passed: false };
 }
 
 function easeOutCubic(x) {
@@ -247,12 +228,15 @@ function updateUI() {
     const remaining = getTimeRemaining(HSC_DATE);
 
     if (remaining.passed) {
-      labelText.textContent = "HSC '26 has started!";
-      countdownDiv.textContent = "Good Luck!";
+      document.getElementById("cd-body").innerHTML = "<div style='font-size: 2.5rem; padding: 20px 0;'>Good Luck!</div>";
+      document.getElementById("cd-header").textContent = "HSC '26 HAS STARTED!";
     } else {
-      labelText.textContent = "Time until HSC '26";
-      // format: "4 months, 0 days, 10 hours, 30 minutes, 20 seconds"
-      countdownDiv.textContent = `${remaining.months} months, ${remaining.days} days, ${remaining.hours} hours, ${remaining.minutes} minutes, ${remaining.seconds} seconds`;
+      document.getElementById("cd-header").textContent = "HSC EXAM COUNTDOWN: 1ST JULY";
+      // .padStart(2, '0') forces numbers like 5 to show as "05" to match the visual look
+      document.getElementById("cd-days").textContent = remaining.days.toString().padStart(2, '0');
+      document.getElementById("cd-hours").textContent = remaining.hours.toString().padStart(2, '0');
+      document.getElementById("cd-mins").textContent = remaining.minutes.toString().padStart(2, '0');
+      document.getElementById("cd-secs").textContent = remaining.seconds.toString().padStart(2, '0');
     }
   }
 

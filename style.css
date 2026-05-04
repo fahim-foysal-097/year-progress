@@ -324,10 +324,69 @@ input[type="number"] {
   border: none;
 }
 
-.countdown {
-  font-size: clamp(1rem, 4vw, 2.5rem);
-  font-weight: 600;
-  color: var(--accent-green);
-  text-shadow: 0 0 10px var(--accent-green);
+/* Card Countdown Styles */
+.countdown-card {
+  background-color: #0b0e14; /* Deep dark background like the design */
+  border-radius: 16px;
+  padding: 40px 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
   width: 100%;
+  box-sizing: border-box;
+  margin: 0 auto;
+}
+
+.countdown-header {
+  color: var(--accent-green); /* Respects user's color picker */
+  font-size: 0.85rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  font-weight: 700;
+  margin-bottom: 40px;
+  opacity: 0.9;
+}
+
+.countdown-body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: clamp(10px, 3vw, 30px);
+  margin-bottom: 40px;
+}
+
+.cd-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 60px;
+}
+
+.cd-num {
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  font-weight: 700;
+  line-height: 1;
+  color: var(--text-primary);
+}
+
+.cd-num.highlight {
+  color: var(--accent-green); /* The highlighted SECS counter */
+}
+
+.cd-label {
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+  margin-top: 12px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+}
+
+.cd-sep {
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  color: #333;
+  margin-top: -25px; /* Offset to center colon with numbers vertically */
+  font-weight: 700;
+}
+
+.countdown-footer {
+  color: var(--text-secondary);
+  font-size: 0.85rem;
 }
