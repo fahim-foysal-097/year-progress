@@ -1,5 +1,5 @@
 // Configuration
-const HSC_DATE = new Date("2026-07-01T00:00:00");
+const ADM_DATE = new Date("2026-12-01T00:00:00");
 const YEAR_START = new Date("2026-01-01T00:00:00");
 const YEAR_END = new Date("2027-01-01T00:00:00");
 
@@ -16,7 +16,7 @@ const progressContainer = document.getElementById("progress-container");
 const progressBar = document.getElementById("progress-bar");
 const countdownDiv = document.getElementById("countdown");
 const btnYear = document.getElementById("btn-year");
-const btnHsc = document.getElementById("btn-hsc");
+const btnAdm = document.getElementById("btn-adm");
 
 // Settings DOM
 const settingsBtn = document.getElementById("settings-btn");
@@ -102,7 +102,7 @@ customColorPicker.addEventListener("input", (e) => {
   applySettings();
 });
 
-let currentMode = "year"; // 'year' or 'hsc'
+let currentMode = "year"; // 'year' or 'adm'
 
 let isAnimating = false;
 let animationStartTime = 0;
@@ -122,7 +122,7 @@ function switchMode(mode) {
   // Toggle active state of chips
   if (mode === "year") {
     btnYear.classList.add("active");
-    btnHsc.classList.remove("active");
+    btnAdm.classList.remove("active");
     progressContainer.style.display = "block";
     countdownDiv.style.display = "none";
 
@@ -131,7 +131,7 @@ function switchMode(mode) {
     labelText.style.display = "block"; // Show main label
     document.querySelector(".content").style.textAlign = "left";
   } else {
-    btnHsc.classList.add("active");
+    btnAdm.classList.add("active");
     btnYear.classList.remove("active");
     progressContainer.style.display = "none";
     countdownDiv.style.display = "block";
@@ -225,18 +225,28 @@ function updateUI() {
     // Stop animation if we switch away
     isAnimating = false;
 
-    const remaining = getTimeRemaining(HSC_DATE);
+    const remaining = getTimeRemaining(ADM_DATE);
 
     if (remaining.passed) {
-      document.getElementById("cd-body").innerHTML = "<div style='font-size: 2.5rem; padding: 20px 0;'>Good Luck!</div>";
-      document.getElementById("cd-header").textContent = "HSC '26 HAS STARTED!";
+      document.getElementById("cd-body").innerHTML =
+        "<div style='font-size: 2.5rem; padding: 20px 0;'>Good Luck!</div>";
+      document.getElementById("cd-header").textContent = "ADM '26 HAS STARTED!";
     } else {
-      document.getElementById("cd-header").textContent = "HSC EXAM COUNTDOWN: 1ST JULY";
+      document.getElementById("cd-header").textContent =
+        "ADM EXAM COUNTDOWN: 1ST DECEMBER";
       // .padStart(2, '0') forces numbers like 5 to show as "05" to match the visual look
-      document.getElementById("cd-days").textContent = remaining.days.toString().padStart(2, '0');
-      document.getElementById("cd-hours").textContent = remaining.hours.toString().padStart(2, '0');
-      document.getElementById("cd-mins").textContent = remaining.minutes.toString().padStart(2, '0');
-      document.getElementById("cd-secs").textContent = remaining.seconds.toString().padStart(2, '0');
+      document.getElementById("cd-days").textContent = remaining.days
+        .toString()
+        .padStart(2, "0");
+      document.getElementById("cd-hours").textContent = remaining.hours
+        .toString()
+        .padStart(2, "0");
+      document.getElementById("cd-mins").textContent = remaining.minutes
+        .toString()
+        .padStart(2, "0");
+      document.getElementById("cd-secs").textContent = remaining.seconds
+        .toString()
+        .padStart(2, "0");
     }
   }
 
